@@ -1,0 +1,13 @@
+.navbar a {
+    color: white !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-item {
+    font-size: small;
+}
+
+
