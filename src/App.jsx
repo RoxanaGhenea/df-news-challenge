@@ -4,6 +4,7 @@ import NavBar from './Components/Header';
 import Footer from './Components/Footer';
 import { getArticlesData } from './utils/mockNewsData.js';
 import HeadlineList from './Components/HeadlineList';
+import ArticlePage from './Components/ArticlePage';
 
 function App() {
 
@@ -15,7 +16,8 @@ function App() {
       console.error(data.message);
       setHeadlines([]);
     } else {
-      setHeadlines(data);
+      const modifiedIdData = data.map(idLink => ({...idLink, id: idLink.id.replaceAll("/", "-")}));
+      setHeadlines(modifiedIdData);
     }
   };
 
@@ -28,6 +30,7 @@ function App() {
       <NavBar />
       <Routes>
         {headlines.length > 0 && <Route path="/" element={<HeadlineList headlineData={headlines} />} />}
+        <Route path="/article/:id" element={<ArticlePage headlineData={headlines}/>} />
       </Routes>
       <Footer />
     </>  

@@ -26,10 +26,6 @@ const HeadlineList = ({headlineData}) => {
     )
 }
 
-HeadlineList.defaultProps = {
-    headlineData: []
-}
-
 HeadlineList.propTypes = {
     headlineData: PropTypes.arrayOf(
         PropTypes.shape({
@@ -42,6 +38,7 @@ HeadlineList.propTypes = {
                 headline: PropTypes.string.isRequired,
                 byline: PropTypes.string.isRequired,
                 thumbnail: PropTypes.string.isRequired,
+                bodyText: PropTypes.string.isRequired,
             }).isRequired,
         })
     ),        

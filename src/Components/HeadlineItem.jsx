@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const HeadlineItem = ({id, sectionName, webPublicationDate, webUrl, apiUrl, fields: { headline, byline, thumbnail } }) => {
+const HeadlineItem = ({id, sectionName, webPublicationDate, webUrl, apiUrl, fields: { headline, byline, thumbnail, bodyText } }) => {
     const issueDate = new Date(webPublicationDate).toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       });
+
+    const navigate = useNavigate();
+    const navigateToArticle = () => {
+        navigate(`/article/${id}`)
+    }
   
     return (
         <>
             <div>{issueDate}</div>
             <img src={thumbnail} alt="Thumbnail" />
-            <div>{headline}</div>
+            <div onClick={navigateToArticle}>{headline}</div>
             <div>{byline}</div>
-            
         </>
     )
 }
@@ -28,6 +33,7 @@ HeadlineItem.propTypes = {
       headline: PropTypes.string.isRequired,
       byline: PropTypes.string.isRequired,
       thumbnail: PropTypes.string.isRequired,
+      bodyText: PropTypes.string.isRequired,
     }).isRequired,
   };
 
