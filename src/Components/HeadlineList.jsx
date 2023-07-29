@@ -1,27 +1,24 @@
 import PropTypes from 'prop-types';
 import HeadlineItem from './HeadlineItem';
-// import HeadlineListStyle from './HeadlineList.css';
+import { useSearchParams } from 'react-router-dom';
+import './HeadlineList.css';
 
-const HeadlineList = ({headlineData}) => {
-
+const HeadlineList = ({ headlineData, sections, searchValue, setShowSearch }) => {
     let headlineTable = [];
+    const [searchParams, _] = useSearchParams();
+    const sectionFilter = searchParams.get('section');
     headlineData.forEach(headline => {
-        headlineTable.push(<HeadlineItem {...headline} key={headline.id} />)
+        if (sectionFilter != null && sections.includes(sectionFilter) && headline.sectionName != sectionFilter) return;
+        if (sectionFilter != null && sectionFilter == 'Others' && sections.includes(headline.sectionName)) return;
+        if (headline.fields.headline.toLowerCase().indexOf(searchValue.toLowerCase()) === -1) return;
+        headlineTable.push(<HeadlineItem {...headline} key={headline.id} setShowSearch={setShowSearch} />)
     });
-    const middlePosition = Math.ceil(headlineTable.length / 2);
-    const headlineColumn1 = headlineTable.slice(0, middlePosition);
-    const headlineColumn2 = headlineTable.slice(-middlePosition);
 
     return (
         <>
-            <div className='d-flex container-fluid'>
-                <div className='col-6'>
-                    {headlineColumn1}
-                </div>
-                <div className='col-6'>
-                    {headlineColumn2}
-                </div>
-            </div>   
+            <div className='headline-list'>
+                {headlineTable}
+            </div>
         </>
     )
 }
@@ -41,7 +38,10 @@ HeadlineList.propTypes = {
                 bodyText: PropTypes.string.isRequired,
             }).isRequired,
         })
-    ),        
+    ),
+    sections: PropTypes.arrayOf(PropTypes.string.isRequired),
+    searchValue: PropTypes.string.isRequired,
+    setShowSearch: PropTypes.func.isRequired,
 }
 
 export default HeadlineList;

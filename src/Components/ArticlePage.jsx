@@ -1,24 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from "prop-types";
+import Article from './Article';
 
-const ArticlePage = ({headlineData}) => {
+const ArticlePage = ({ headlineData }) => {
 
-    const {id} = useParams();
+    const { id } = useParams();
     const findArticleId = headlineData.find((idToFind) => idToFind.id === id);
-    const navigate = useNavigate();
 
-    const navigateHome = () => {
-        navigate('/');
-    };    
-    
     return (
         <>
-           <div>
-                <div>
-                <button onClick={navigateHome}>Home</button> <hr />
-                </div>
-                <div>{findArticleId ? <div>{findArticleId.fields.bodyText}</div> : <div>Article not found</div>}</div>
-           </div>  
+            {findArticleId && <Article article={findArticleId} />}
+            {!findArticleId && <div>Article not found!</div>}
         </>
     )
 }
@@ -38,7 +30,7 @@ ArticlePage.propTypes = {
                 bodyText: PropTypes.string.isRequired,
             }).isRequired,
         })
-    ),        
+    ),
 }
 
 export default ArticlePage;

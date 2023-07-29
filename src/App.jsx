@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import NavBar from './Components/Header';
 import Footer from './Components/Footer';
@@ -9,6 +9,9 @@ import ArticlePage from './Components/ArticlePage';
 function App() {
 
   const [headlines, setHeadlines] = useState([]);
+  const [searchValue, setSearch] = useState('');
+  const sections = ['Business', 'Politics', 'World news', 'Sport'];
+  console.log(searchValue);
 
   const getData = async () => {
     const data = await getArticlesData();
@@ -16,7 +19,7 @@ function App() {
       console.error(data.message);
       setHeadlines([]);
     } else {
-      const modifiedIdData = data.map(idLink => ({...idLink, id: idLink.id.replaceAll("/", "-")}));
+      const modifiedIdData = data.map(idLink => ({ ...idLink, id: idLink.id.replaceAll("/", "-") }));
       setHeadlines(modifiedIdData);
     }
   };
@@ -25,15 +28,18 @@ function App() {
     getData();
   }, []);
 
+  const [showSearch, setShowSearch] = useState(window.location.pathname.toLowerCase().indexOf('/home') != -1);
+
   return (
     <>
-      <NavBar />
+      <NavBar sections={sections} searchValue={searchValue} setSearch={setSearch} showSearch={showSearch} />
       <Routes>
-        {headlines.length > 0 && <Route path="/" element={<HeadlineList headlineData={headlines} />} />}
-        <Route path="/article/:id" element={<ArticlePage headlineData={headlines}/>} />
+        <Route path='' element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HeadlineList sections={sections} headlineData={headlines} searchValue={searchValue} setShowSearch={setShowSearch} />} />
+        <Route path="/article/:id" element={<ArticlePage headlineData={headlines} />} />
       </Routes>
       <Footer />
-    </>  
+    </>
   )
 }
 

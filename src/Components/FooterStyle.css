@@ -14,7 +14,9 @@
     display: flex;
     font-size: smaller;
     justify-content: space-between;
-    margin: 20px;
+    padding: 20px;
+    background-color: black;
+    color: white;
 }
 
 .policies {
