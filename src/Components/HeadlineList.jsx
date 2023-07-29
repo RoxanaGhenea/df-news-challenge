@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import HeadlineItem from './HeadlineItem';
-import HeadlineListStyle from './HeadlineList.css';
+// import HeadlineListStyle from './HeadlineList.css';
 
 const HeadlineList = ({headlineData}) => {
 
@@ -14,7 +14,7 @@ const HeadlineList = ({headlineData}) => {
 
     return (
         <>
-            <div className='row'>
+            <div className='d-flex container-fluid'>
                 <div className='col-6'>
                     {headlineColumn1}
                 </div>

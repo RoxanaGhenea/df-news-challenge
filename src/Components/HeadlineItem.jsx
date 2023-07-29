@@ -15,7 +15,7 @@ const HeadlineItem = ({id, sectionName, webPublicationDate, webUrl, apiUrl, fiel
   
     return (
         <>
-            <div>{issueDate}</div>
+            <div className=''>{issueDate}</div>
             <img src={thumbnail} alt="Thumbnail" />
             <div onClick={navigateToArticle}>{headline}</div>
             <div>{byline}</div>
