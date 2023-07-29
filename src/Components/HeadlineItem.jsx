@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './HeaderlineItem.css';
 
 const HeadlineItem = ({ id, sectionName, webPublicationDate, webUrl, apiUrl, fields: { headline, byline, thumbnail, bodyText }, setShowSearch }) => {

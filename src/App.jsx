@@ -1,10 +1,11 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import NavBar from './Components/Header';
 import Footer from './Components/Footer';
 import { getArticlesData } from './utils/mockNewsData.js';
 import HeadlineList from './Components/HeadlineList';
 import ArticlePage from './Components/ArticlePage';
+import Navigate from './Components/Navigate';
 
 function App() {
 
