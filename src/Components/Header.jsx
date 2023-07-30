@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./HeaderStyle.css";
+import "./Header.css";
 import PropTypes from 'prop-types';
 
 const NavBar = ({ sections, searchValue, setSearch, showSearch }) => {

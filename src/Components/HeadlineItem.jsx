@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import './HeaderlineItem.css';
+import './HeadlineItem.css';
 
 const HeadlineItem = ({ id, sectionName, webPublicationDate, webUrl, apiUrl, fields: { headline, byline, thumbnail, bodyText }, setShowSearch }) => {
   const issueDate = new Date(webPublicationDate).toLocaleDateString(undefined, {
