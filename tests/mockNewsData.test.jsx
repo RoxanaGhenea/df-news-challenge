@@ -20,7 +20,7 @@ describe('getArticlesData tests', () => {
             // Act
             await getArticlesData();
             // Assert
-            expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/mockApiResponse`);
+            expect(axios.get).toHaveBeenCalledWith(`https://content.guardianapis.com/search?order-by=newest&show-fields=byline%2Cthumbnail%2Cheadline%2CbodyText&api-key=72b65647-e224-4a52-9210-3863872df366`);
         });
 
         test('2 - should have successful request returning the right data', async () => {
