@@ -1,20 +1,27 @@
-import { useState } from "react";
+import * as React from "react";
 import "./Header.css";
 import PropTypes from 'prop-types';
 
 const NavBar = ({ sections, searchValue, setSearch, showSearch }) => {
-    const [searchText, setSearchText] = useState(searchValue);
-    const sectionComponents = sections.map(section => {
-        const link = "/home?section=" + section;
-        return <li className="nav-item" key={section}>
-            <a className="nav-link" aria-current="page" href={link}>{section}</a>
-        </li>
-    });
-    sectionComponents.push(
-        <li className="nav-item" key='Others'>
-            <a className="nav-link" aria-current="page" href='/home?section=Others'>Others</a>
-        </li>
-    )
+    const [searchText, setSearchText] = React.useState(searchValue);
+    const sectionComponents = React.useMemo(() => {
+        const components = sections.map(section => {
+            const link = "/home?section=" + section;
+            return <li className="nav-item" key={section}>
+                <a className="nav-link" aria-current="page" href={link}>{section}</a>
+            </li>
+        })
+        components.push(
+            <li className="nav-item" key='Others'>
+                <a className="nav-link" aria-current="page" href='/home?section=Others'>Others</a>
+            </li>
+        )
+        return components;
+    }, [sections]);
+
+    const onTextChange = React.useCallback((e) => setSearchText(e.target.value), [setSearchText]);
+    const onSearchClick = React.useCallback(() => setSearch(searchText), [searchText, setSearch]);
+
     return (
         <nav className="navbar navbar-expand-lg bg-black">
             <div className="container-fluid">
@@ -27,8 +34,8 @@ const NavBar = ({ sections, searchValue, setSearch, showSearch }) => {
                         {sectionComponents}
                     </ul>
                     {showSearch && <div className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Search" value={searchText} aria-label="Search" onChange={e => setSearchText(e.target.value)} />
-                        <button className="btn btn-outline-light" onClick={() => setSearch(searchText)}>Search</button>
+                        <input className="form-control me-2" type="search" placeholder="Search" value={searchText} aria-label="Search" onChange={onTextChange} />
+                        <button className="btn btn-outline-light" onClick={onSearchClick}>Search</button>
                     </div>}
                 </div>
             </div>

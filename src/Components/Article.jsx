@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
+import * as React from 'react';
 import './Article.css';
 
 const Article = ({ article }) => {
-    const issueDate = new Date(article.webPublicationDate).toLocaleDateString(undefined, {
+    const issueDate = React.useMemo(() => new Date(article.webPublicationDate).toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-    });
+    }), [article.webPublicationDate]);
     return (
         <div className="article">
             <div className='section-name'>{article.sectionName}</div>

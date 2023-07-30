@@ -1,23 +1,30 @@
 import PropTypes from 'prop-types';
 import HeadlineItem from './HeadlineItem';
 import { useSearchParams } from 'react-router-dom';
+import * as React from 'react';
 import './HeadlineList.css';
 
 const HeadlineList = ({ headlineData, sections, searchValue, setShowSearch }) => {
-    let headlineTable = [];
     const [searchParams, _] = useSearchParams();
-    const sectionFilter = searchParams.get('section');
-    headlineData.forEach(headline => {
-        if (sectionFilter != null && sections.includes(sectionFilter) && headline.sectionName != sectionFilter) return;
-        if (sectionFilter != null && sectionFilter == 'Others' && sections.includes(headline.sectionName)) return;
-        if (headline.fields.headline.toLowerCase().indexOf(searchValue.toLowerCase()) === -1) return;
-        headlineTable.push(<HeadlineItem {...headline} key={headline.id} setShowSearch={setShowSearch} />)
-    });
+
+    const sectionFilter = React.useMemo(() => searchParams.get('section'), []);
+
+    const searchedHeadlineData = React.useMemo(() => headlineData.filter(
+        headline => headline.fields.headline.toLowerCase().indexOf(searchValue.toLowerCase()) != -1
+    ), [headlineData, searchValue]);
+    const sectionHeadlineData = React.useMemo(() => searchedHeadlineData.filter(headline =>
+        sectionFilter == null ||
+        headline.sectionName === sectionFilter ||
+        (sectionFilter == 'Others' && !sections.includes(headline.sectionName))
+    ), [searchedHeadlineData, sectionFilter]);
+    const headlinesTable = React.useMemo(() => sectionHeadlineData.map(headline => {
+        return <HeadlineItem {...headline} key={headline.id} setShowSearch={setShowSearch} />;
+    }), [sectionHeadlineData]);
 
     return (
         <>
             <div className='headline-list'>
-                {headlineTable}
+                {headlinesTable}
             </div>
         </>
     )
