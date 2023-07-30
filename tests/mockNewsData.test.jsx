@@ -32,14 +32,14 @@ describe('getArticlesData tests', () => {
             expect(result).toEqual(mockData);
         });
 
-        // test('3 - should have unsuccessful request returning the error object', async () => {
-        //     // Arrange
-        //     const error = { message: `Error` };
-        //     axios.get.mockRejectedValueOnce(error);
-        //     // Act
-        //     const result = await getArticlesData();
-        //     // Assert
-        //     expect(result).toBe(error);
-        // });
+        test('3 - should have unsuccessful request returning the error object', async () => {
+            // Arrange
+            const error = { message: `Error` };
+            axios.get.mockRejectedValueOnce(error);
+            // Act
+            const result = await getArticlesData();
+            // Assert
+            expect(result).toBe(error);
+        });
     });
 });
