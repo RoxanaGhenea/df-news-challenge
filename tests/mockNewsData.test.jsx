@@ -23,14 +23,14 @@ describe('getArticlesData tests', () => {
             expect(axios.get).toHaveBeenCalledWith(`http://localhost:3000/mockApiResponse`);
         });
 
-        // test('2 - should have successful request returning the right data', async () => {
-        //     // Arrange
-        //     axios.get.mockResolvedValueOnce({ data: { response: { results: mockData }}});
-        //     // Act
-        //     const result = await getArticlesData();
-        //     // Assert 
-        //     expect(result).toEqual(mockData);
-        // });
+        test('2 - should have successful request returning the right data', async () => {
+            // Arrange
+            axios.get.mockResolvedValueOnce({ data: { response: { results: mockData }}});
+            // Act
+            const result = await getArticlesData();
+            // Assert 
+            expect(result).toEqual(mockData);
+        });
 
         // test('3 - should have unsuccessful request returning the error object', async () => {
         //     // Arrange
