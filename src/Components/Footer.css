@@ -1,0 +1,33 @@
+.upperContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.upperInsideContainer {
+    display: flex;
+    gap: 50px;
+    font-size: small;
+}
+
+.lowerContainer {
+    display: flex;
+    font-size: smaller;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+
+.policies {
+    display: flex;
+    gap: 29px;
+}
+
+.category {
+    font-weight: bold;
+}
+
+hr {
+    margin: 20px;
+}

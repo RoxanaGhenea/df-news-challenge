@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import NavBar from './Components/Header';
+import Footer from './Components/Footer';
+import { getArticlesData } from './utils/mockNewsData.js';
+import HeadlineList from './Components/HeadlineList';
+import ArticlePage from './Components/ArticlePage';
+import Navigate from './Components/Navigate';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [headlines, setHeadlines] = useState([]);
+  const [searchValue, setSearch] = useState('');
+  const sections = ['Business', 'Politics', 'World news', 'Sport'];
+  console.log(searchValue);
+
+  const getData = async () => {
+    const data = await getArticlesData();
+    if (data instanceof Error) {
+      console.error(data.message);
+      setHeadlines([]);
+    } else {
+      const modifiedIdData = data.map(idLink => ({ ...idLink, id: idLink.id.replaceAll("/", "-") }));
+      setHeadlines(modifiedIdData);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const [showSearch, setShowSearch] = useState(window.location.pathname.toLowerCase().indexOf('/home') != -1);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar sections={sections} searchValue={searchValue} setSearch={setSearch} showSearch={showSearch} />
+      <Routes>
+        <Route path='' element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HeadlineList sections={sections} headlineData={headlines} searchValue={searchValue} setShowSearch={setShowSearch} />} />
+        <Route path="/article/:id" element={<ArticlePage headlineData={headlines} />} />
+      </Routes>
+      <Footer />
     </>
   )
 }
 
-export default App
+export default App;
